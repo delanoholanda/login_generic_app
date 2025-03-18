@@ -1,0 +1,38 @@
+<!-- Modal para Cadastrar/Editar Usuário -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">Cadastrar Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do formulário -->
+                <div class="card">
+                    <div class="card-body">
+                        <form id="userForm" method="POST" action="{{ url_for('manage_users') }}">
+                            {{ form.hidden_tag() }}
+                            <div class="mb-3">
+                                {{ form.username.label(class="form-label") }}
+                                {{ form.username(class="form-control", id="form-username", placeholder="Digite seu nome de usuário") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.email.label(class="form-label") }}
+                                {{ form.email(class="form-control", id="form-email", placeholder="Digite seu e-mail") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.password.label(class="form-label") }}
+                                {{ form.password(class="form-control", id="form-password", placeholder="Digite sua senha") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.confirm.label(class="form-label") }}
+                                {{ form.confirm(class="form-control", id="form-confirm", placeholder="Confirme sua senha") }}
+                            </div>
+                            <button type="submit" id="submitButton" class="btn btn-primary">Cadastrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

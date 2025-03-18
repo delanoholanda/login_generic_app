@@ -1,0 +1,73 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 20px;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    bottom: 0;
+}
+
+.card {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+}
+
+button {
+    width: 100%;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+
+.flash-message {
+    width: 100%;
+    margin: 0; /* Remove qualquer margem extra */
+    padding: 0; /* Remove o preenchimento extra */
+}
+
+.flash-message .alert {
+    margin: 10px auto; /* Um pequeno espaço para a mensagem */
+    width: auto; /* Ajusta automaticamente ao tamanho do texto */
+    max-width: 600px; /* Limita a largura para que a mensagem não ocupe toda a tela */
+}
+
+/* Aumentar o espaçamento entre os botões */
+.d-flex .btn {
+    margin-right: 5px;
+}
+
+/* Sombra leve ao passar o mouse nos botões */
+.btn:hover {
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Badge de papel com espaçamento */
+.badge {
+    padding: 0.5em 0.75em;
+    font-size: 0.9rem;
+}

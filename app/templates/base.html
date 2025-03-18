@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+
+
+    <title>{% block title %}Ntic Tools{% endblock %}</title>
+</head>
+<body>
+    {% if not request.path.startswith('/login') %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">NTIC - Quixadá</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
+                    
+                    {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('manage_users') }}">Gerenciar Usuários</a></li>
+                    
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <header class="bg-primary text-white text-center py-4 mb-4">
+        <div class="container">
+            <h1>Ferramentas do NTIC</h1>
+        </div>
+    </header>
+
+    <!-- Mensagens Flash -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <div class="flash-message" style="position: absolute;">
+        <div class="row">
+            <div class="col-12">
+                {% for category, message in messages %}
+                    {% if message != "Please log in to access this page." %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endwith %}
+
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
+        <p>&copy; 2025 NTIC - UFC Quixadá</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<!-- Script para fechar automaticamente as mensagens flash após 1 segundo -->
+<script>
+    // Seleciona todos os alertas na página
+    const flashMessages = document.querySelectorAll('.alert');
+    
+    // Fecha cada mensagem flash após 1 segundo (1000 milissegundos)
+    flashMessages.forEach(function(message) {
+        setTimeout(function() {
+            var alert = new bootstrap.Alert(message);
+            alert.close(); // Fecha o alerta
+        }, 2000); // Tempo em milissegundos
+    });
+</script>

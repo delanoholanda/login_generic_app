@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Gerenciar Usuários - Unimed App{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="text-center mb-4">Gerenciar Usuários</h2>
+
+    <!-- Botão para cadastrar usuário -->
+    <div class="mb-3" style="width: auto;">
+        <button class="btn btn-success btn-sm d-inline-flex align-items-center" id="openRegisterModal" style="width: auto;">
+            <i class="bi bi-person-plus me-1"></i> Cadastrar
+        </button>
+    </div>
+
+    <!-- Incluir o modal com o caminho correto -->
+    {% include 'user/user_modal.html' %}
+
+    <!-- Tabela de Gerenciamento de Usuários -->
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Usuário</th>
+                    <th>Email</th>
+                    <th>Papel Atual</th>
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td><strong>{{ user.username }}</strong></td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <span class="badge {% if user.role == 'admin' %} bg-warning text-dark {% else %} bg-secondary {% endif %}">
+                            {{ user.role }}
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center">
+                            {% if user.role != 'admin' %}
+                            <form action="{{ url_for('set_role', user_id=user.id, role='admin') }}" method="POST" class="me-2">
+                                <button class="btn btn-outline-success btn-sm" title="Tornar Admin">
+                                    <i class="bi bi-person-plus-fill"></i>
+                                </button>
+                            </form>
+                            {% else %}
+                            <form action="{{ url_for('set_role', user_id=user.id, role='user') }}" method="POST" class="me-2">
+                                <button class="btn btn-outline-warning btn-sm" title="Remover Admin">
+                                    <i class="bi bi-person-dash-fill"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        
+                            <!-- Link de Editar -->
+                            <a href="#" class="btn btn-outline-primary btn-sm me-2 editUserBtn" data-id="{{ user.id }}" data-username="{{ user.username }}" data-email="{{ user.email }}">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                        
+                            <!-- Formulário de exclusão -->
+                            <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');">
+                                <button class="btn btn-outline-danger btn-sm" title="Excluir">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Incluindo o arquivo JS separado -->
+<script src="{{ url_for('static', filename='js/user_modal.js') }}"></script>
+{% endblock %}
